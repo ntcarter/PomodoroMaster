@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/timersFragment">
+    <fragment
+        android:id="@+id/timersFragment"
+        android:name="natec.androidapp.masterpomodoro.ui.fragments.TimersFragment"
+        android:label="fragment_timers"
+        tools:layout="@layout/fragment_timers" >
+        <action
+            android:id="@+id/action_timersFragment_to_addTimerFragment"
+            app:destination="@id/addTimerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTimerFragment"
+        android:name="natec.androidapp.masterpomodoro.ui.fragments.AddTimerFragment"
+        android:label="fragment_add_timer"
+        tools:layout="@layout/fragment_add_timer" >
+        <action
+            android:id="@+id/action_addTimerFragment_to_timersFragment"
+            app:destination="@id/timersFragment" />
+    </fragment>
+</navigation>

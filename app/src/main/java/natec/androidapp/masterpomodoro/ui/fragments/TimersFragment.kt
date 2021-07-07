@@ -33,7 +33,7 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, factory).get(AddTimerViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(AddTimerViewModel::class.java)
 
         _binding = FragmentTimersBinding.bind(view)
 
@@ -44,9 +44,11 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
                 val action = TimersFragmentDirections.actionTimersFragmentToAddTimerFragment()
                 findNavController().navigate(action)
             }
-            rvTimers.setHasFixedSize(true)
-            rvTimers.layoutManager = LinearLayoutManager(requireContext())
-            rvTimers.adapter = adapter
+            rvTimers.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(requireContext())
+                this.adapter = adapter
+            }
         }
 
         viewModel.getAllTimers().observe(viewLifecycleOwner, {
@@ -81,17 +83,9 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     }
 
     override fun showEditDialog(timer: Timers) {
-       // create dialog with the layout and pass in value from the timer after inflation
         viewModel.activeEditTimer = timer
-        val dialogFragment = EditTimerDialogFragment(getTimerBundle(timer))
+        // Create the dialog and pass it information about the selected timer
+        val dialogFragment = EditTimerDialogFragment()
         dialogFragment.show(parentFragmentManager, "editTimer")
-    }
-
-    fun getTimerBundle(timer: Timers): Bundle{
-        val bundle = Bundle()
-        bundle.putString("NAME", timer.name)
-        bundle.putInt("TOTAL_TASK_TIME", timer.totalTime)
-        bundle.putInt("TOTAL_BREAK_TIME", timer.breakTotalTime)
-        return bundle
     }
 }

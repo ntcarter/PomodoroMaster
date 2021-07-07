@@ -9,6 +9,7 @@ class AddTimerRepository @Inject constructor(
 ) {
     suspend fun insertTimer(timer: Timers) = db.getTimerDao().insertTimer(timer)
     suspend fun deleteTimer(timer: Timers) = db.getTimerDao().deleteTimer(timer)
+    suspend fun updateTimer(timer: Timers) = db.getTimerDao().updateTimer(timer)
 
     fun getAllTimers() = db.getTimerDao().getAllTimers()
 }

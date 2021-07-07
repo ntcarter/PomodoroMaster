@@ -29,7 +29,8 @@ class AddTimerFragment: Fragment(R.layout.fragment_add_timer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, factory).get(AddTimerViewModel::class.java)
+        // AddTimerViewModel is shard among multiple fragments so scope it to the activity hosting the fragments
+        viewModel = ViewModelProvider(requireActivity(), factory).get(AddTimerViewModel::class.java)
 
         _binding = FragmentAddTimerBinding.bind(view)
 

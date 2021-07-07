@@ -23,8 +23,8 @@
         android:layout_marginStart="4dp"
         android:text="H"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskHour2"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskHour2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakHour"
+        app:layout_constraintStart_toEndOf="@+id/etEditBreakHour" />
 
     <TextView
         android:id="@+id/textView38"
@@ -43,8 +43,8 @@
         android:layout_marginStart="4dp"
         android:text="M"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskMin2"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskMin2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakMin"
+        app:layout_constraintStart_toEndOf="@+id/etEditBreakMin" />
 
     <TextView
         android:id="@+id/textView39"
@@ -63,8 +63,8 @@
         android:layout_marginStart="4dp"
         android:text="S"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskSecond2"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskSecond2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakSecond"
+        app:layout_constraintStart_toEndOf="@+id/etEditBreakSecond" />
 
     <EditText
         android:id="@+id/etEditTaskHour"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
     <EditText
-        android:id="@+id/etEditTaskHour2"
+        android:id="@+id/etEditBreakHour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -103,14 +103,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
     <EditText
-        android:id="@+id/etEditTaskMin2"
+        android:id="@+id/etEditBreakMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="2"
         android:inputType="numberSigned"
         android:maxLength="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskHour2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakHour"
         app:layout_constraintStart_toEndOf="@+id/textView41" />
 
     <EditText
@@ -125,14 +125,14 @@
         app:layout_constraintStart_toEndOf="@+id/textView38" />
 
     <EditText
-        android:id="@+id/etEditTaskSecond2"
+        android:id="@+id/etEditBreakSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="2"
         android:inputType="numberSigned"
         android:maxLength="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskMin2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakMin"
         app:layout_constraintStart_toEndOf="@+id/textView42" />
 
     <TextView
@@ -169,7 +169,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditTaskMin2" />
+        app:layout_constraintTop_toBottomOf="@+id/etEditBreakMin" />
 
     <TextView
         android:id="@+id/textView45"

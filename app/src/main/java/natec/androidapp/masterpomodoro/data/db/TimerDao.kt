@@ -11,6 +11,9 @@ interface TimerDao {
     @Delete
     suspend fun deleteTimer(item: Timers)
 
+    @Update
+    suspend fun updateTimer(item: Timers)
+
     @Query("SELECT * FROM timers")
     fun getAllTimers(): LiveData<List<Timers>>
 }

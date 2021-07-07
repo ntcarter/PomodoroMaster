@@ -2,11 +2,11 @@ package natec.androidapp.masterpomodoro.ui.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import natec.androidapp.masterpomodoro.data.db.Timers
 import natec.androidapp.masterpomodoro.data.repositories.AddTimerRepository
+import natec.androidapp.masterpomodoro.util.convertToSeconds
 
 private const val TAG = "AddTimerViewModel"
 
@@ -16,12 +16,16 @@ class AddTimerViewModel(
 
     var activeEditTimer: Timers? = null
 
-    private fun insertTimer(timer: Timers) = CoroutineScope(Dispatchers.Main).launch {
+    private fun insertTimer(timer: Timers) = viewModelScope.launch {
         repository.insertTimer(timer)
     }
 
-    fun delete(timer: Timers) = CoroutineScope(Dispatchers.Main).launch {
+    fun delete(timer: Timers) = viewModelScope.launch {
         repository.deleteTimer(timer)
+    }
+
+    private fun updateTimer(timer: Timers) = viewModelScope.launch {
+        repository.updateTimer(timer)
     }
 
     fun getAllTimers() = repository.getAllTimers()
@@ -38,31 +42,54 @@ class AddTimerViewModel(
         breakM: String,
         breakS: String
     ) {
-        var totalTaskTime = 0
-        // time values stored in seconds need to convert from hours/minutes
-        if(taskH.isNotEmpty()){
-            totalTaskTime += taskH.toInt()*360
-        }
-        if(taskM.isNotEmpty()){
-            totalTaskTime += taskM.toInt()*60
-        }
-        if(taskS.isNotEmpty()){
-            totalTaskTime += taskS.toInt()
-        }
 
-        var totalBreakTime = 0
-        if(breakH.isNotEmpty()){
-            totalBreakTime += breakH.toInt()*360
-        }
-        if(breakM.isNotEmpty()){
-            totalBreakTime += breakM.toInt()*60
-        }
-        if(breakS.isNotEmpty()){
-            totalBreakTime += breakS.toInt()
-        }
+        val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
 
-        val timerToInsert = Timers(name, totalTaskTime, 0, totalBreakTime, 0, "FFFFFF", "000000")
+        val timerToInsert = Timers(name, times.first, 0, times.second, 0, "FFFFFF", "000000")
         Log.d(TAG, "getTimerReadyForInsert: inserting $timerToInsert ")
         insertTimer(timerToInsert)
+    }
+
+    fun getTimerReadyForUpdate(
+        name: String,
+        taskH: String,
+        taskM: String,
+        taskS: String,
+        breakH: String,
+        breakM: String,
+        breakS: String
+    ) {
+        val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
+
+        // update the values of the current timer and update the DB
+        activeEditTimer?.name = name
+        activeEditTimer?.totalTime = times.first
+        activeEditTimer?.breakTotalTime = times.second
+        updateTimer(activeEditTimer!!)
+
+        activeEditTimer = null
+    }
+
+    private fun getTotalTimes(
+        taskH: String,
+        taskM: String,
+        taskS: String,
+        breakH: String,
+        breakM: String,
+        breakS: String
+    ): Pair<Int, Int> {
+        //handle empty strings
+        val taskHours = if (taskH.isEmpty()) 0 else taskH.toInt()
+        val taskMin = if (taskM.isEmpty()) 0 else taskM.toInt()
+        val taskSeconds = if (taskS.isEmpty()) 0 else taskS.toInt()
+
+        val breakHours = if (breakH.isEmpty()) 0 else breakH.toInt()
+        val breakMin = if (breakM.isEmpty()) 0 else breakM.toInt()
+        val breakSeconds = if (breakS.isEmpty()) 0 else breakS.toInt()
+
+        val totalTaskTime = convertToSeconds(taskHours, taskMin, taskSeconds)
+        val totalBreakTime = convertToSeconds(breakHours, breakMin, breakSeconds)
+
+        return Pair(totalTaskTime, totalBreakTime)
     }
 }

@@ -211,4 +211,26 @@
         app:layout_constraintStart_toEndOf="@+id/tvEditTimer"
         tools:text="Task 1" />
 
+    <TextView
+        android:id="@+id/tvEditBgColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="#C6C6C6"
+        app:layout_constraintBottom_toBottomOf="@+id/textView44"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView44"
+        app:layout_constraintTop_toTopOf="@+id/textView44" />
+
+    <TextView
+        android:id="@+id/tvEditTextColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#403E3E"
+        app:layout_constraintBottom_toBottomOf="@+id/textView45"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditBgColor"
+        app:layout_constraintStart_toStartOf="@+id/tvEditBgColor"
+        app:layout_constraintTop_toTopOf="@+id/textView45" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

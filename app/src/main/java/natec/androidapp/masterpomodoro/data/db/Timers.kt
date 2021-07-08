@@ -22,9 +22,9 @@ data class Timers(
     @ColumnInfo(name = "break_current_time")
     var breakCurTime: Int,
     @ColumnInfo(name = "timer_color")
-    var timerColor: String,
+    var timerColor: Int,
     @ColumnInfo(name = "text_color")
-    var textColor: String
+    var textColor: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

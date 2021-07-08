@@ -1,8 +1,10 @@
 package natec.androidapp.masterpomodoro.ui.fragments
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -11,17 +13,20 @@ import natec.androidapp.masterpomodoro.R
 import natec.androidapp.masterpomodoro.databinding.FragmentAddTimerBinding
 import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModel
 import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModelFactory
+import top.defaults.colorpicker.ColorPickerPopup
 import javax.inject.Inject
 
 private const val TAG = "AddTimerFragment"
 
 @AndroidEntryPoint
-class AddTimerFragment: Fragment(R.layout.fragment_add_timer) {
+class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
 
     private lateinit var viewModel: AddTimerViewModel
-    @Inject lateinit var factory: AddTimerViewModelFactory
 
-    // we need to null out our binding variable (in onDestroyView)
+    @Inject
+    lateinit var factory: AddTimerViewModelFactory
+
+    // need to null out our binding variable (in onDestroyView)
     // or it will keep an unnecessary instance of our view hierarchy
     private var _binding: FragmentAddTimerBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +44,6 @@ class AddTimerFragment: Fragment(R.layout.fragment_add_timer) {
 
                 // add the timer to the DB
                 // get all data and forward it to somewhere it can be saved (ViewModel)
-                Log.d(TAG, "onViewCreated values: name: ${etName.text} , ${etTaskHour.text}")
                 viewModel.getTimerReadyForInsert(
                     etName.text.toString(),
                     etTaskHour.text.toString(),
@@ -47,11 +51,53 @@ class AddTimerFragment: Fragment(R.layout.fragment_add_timer) {
                     etTaskSecond.text.toString(),
                     etBreakHour.text.toString(),
                     etBreakMin.text.toString(),
-                    etBreakSecond.text.toString()
+                    etBreakSecond.text.toString(),
+                    (tvBgColor.background as ColorDrawable).color,
+                    (tvTextColor.background as ColorDrawable).color
                 )
-                val action = AddTimerFragmentDirections.actionAddTimerFragmentToTimersFragment()
-                findNavController().navigate(action)
+                navigateToTimerFragment()
+            }
+
+            btnCancel.setOnClickListener {
+                navigateToTimerFragment()
+            }
+
+            tvBgColor.setOnClickListener {
+                val colorIdInt = (tvBgColor.background as ColorDrawable).color
+                openColorPicker(colorIdInt, tvBgColor)
+            }
+
+            tvTextColor.setOnClickListener {
+                val colorIdInt = (tvTextColor.background as ColorDrawable).color
+                openColorPicker(colorIdInt, tvTextColor)
             }
         }
+    }
+
+    private fun navigateToTimerFragment() {
+        val action = AddTimerFragmentDirections.actionAddTimerFragmentToTimersFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun openColorPicker(color: Int, view: TextView) {
+        Log.d(TAG, "openColorPicker: Color passed in: $color")
+        ColorPickerPopup.Builder(requireContext())
+            .initialColor(color)
+            .enableBrightness(true)
+            .okTitle("Save")
+            .cancelTitle("Cancel")
+            .showIndicator(true)
+            .showValue(false)
+            .build()
+            .show(view, object : ColorPickerPopup.ColorPickerObserver(){
+                override fun onColorPicked(color: Int) {
+                    view.setBackgroundColor(color)
+                }
+            })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

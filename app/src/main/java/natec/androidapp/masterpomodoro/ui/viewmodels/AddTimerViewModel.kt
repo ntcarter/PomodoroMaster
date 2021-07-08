@@ -40,12 +40,14 @@ class AddTimerViewModel(
         taskS: String,
         breakH: String,
         breakM: String,
-        breakS: String
+        breakS: String,
+        bgColor: Int,
+        textColor: Int
     ) {
 
         val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
 
-        val timerToInsert = Timers(name, times.first, 0, times.second, 0, "FFFFFF", "000000")
+        val timerToInsert = Timers(name, times.first, 0, times.second, 0, bgColor, textColor)
         Log.d(TAG, "getTimerReadyForInsert: inserting $timerToInsert ")
         insertTimer(timerToInsert)
     }
@@ -57,7 +59,9 @@ class AddTimerViewModel(
         taskS: String,
         breakH: String,
         breakM: String,
-        breakS: String
+        breakS: String,
+        bgColor: Int,
+        textColor: Int
     ) {
         val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
 
@@ -65,6 +69,8 @@ class AddTimerViewModel(
         activeEditTimer?.name = name
         activeEditTimer?.totalTime = times.first
         activeEditTimer?.breakTotalTime = times.second
+        activeEditTimer?.timerColor = bgColor
+        activeEditTimer?.textColor = textColor
         updateTimer(activeEditTimer!!)
 
         activeEditTimer = null

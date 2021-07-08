@@ -1,7 +1,6 @@
 package natec.androidapp.masterpomodoro.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -51,8 +50,8 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
             }
         }
 
+        // observes the livedata that holds a list of the timers in the DB
         viewModel.getAllTimers().observe(viewLifecycleOwner, {
-            Log.d(TAG, "onViewCreated: OBSERVING: $it")
             adapter.items = it
             adapter.notifyDataSetChanged()
         })
@@ -83,8 +82,8 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     }
 
     override fun showEditDialog(timer: Timers) {
+        // set the active timer being edited so we can access its views in another fragment
         viewModel.activeEditTimer = timer
-        // Create the dialog and pass it information about the selected timer
         val dialogFragment = EditTimerDialogFragment()
         dialogFragment.show(parentFragmentManager, "editTimer")
     }

@@ -79,6 +79,9 @@ dependencies {
     // dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Color picker
+    implementation 'com.github.duanhong169:colorpicker:1.1.6'
 }
 kapt {
     correctErrorTypes true

@@ -33,7 +33,10 @@ class TimerAdapter(
         fun bind(timer: Timers){
             binding.apply {
                 tvTimerName.text = timer.name
+                tvTimerName.setTextColor(timer.textColor)
                 tvTimerTime.text = timer.totalTime.toString()
+                tvTimerTime.setTextColor(timer.textColor)
+
                 btnplay.setOnClickListener {
                     btnplay.visibility = View.GONE
                     btnPause.visibility = View.VISIBLE
@@ -42,10 +45,12 @@ class TimerAdapter(
                     btnplay.visibility = View.VISIBLE
                     btnPause.visibility = View.GONE
                 }
+
                 btnTimerDelete.setOnLongClickListener {
                     listener.showDeletionDialog(timer)
                     true
                 }
+                cvTimer.setCardBackgroundColor(timer.timerColor)
                 root.setOnLongClickListener {
                     Log.d(TAG, "Tapped view")
                     listener.showEditDialog(timer)

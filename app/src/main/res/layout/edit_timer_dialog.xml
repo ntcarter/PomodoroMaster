@@ -11,129 +11,86 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="H"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskHour"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskHour" />
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView38"
+        app:layout_constraintEnd_toStartOf="@+id/pickerEditTaskM"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditTaskH" />
 
     <TextView
         android:id="@+id/textView41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="H"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakHour"
-        app:layout_constraintStart_toEndOf="@+id/etEditBreakHour" />
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView42"
+        app:layout_constraintEnd_toStartOf="@+id/pickerEditBreakM"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditBreakH" />
 
     <TextView
         android:id="@+id/textView38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="M"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskHour"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskMin" />
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView39"
+        app:layout_constraintEnd_toStartOf="@+id/pickerEditTaskS"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditTaskM" />
 
     <TextView
         android:id="@+id/textView42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="M"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakMin"
-        app:layout_constraintStart_toEndOf="@+id/etEditBreakMin" />
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView43"
+        app:layout_constraintEnd_toStartOf="@+id/pickerEditBreakS"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditBreakM" />
 
     <TextView
         android:id="@+id/textView39"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="S"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskHour"
-        app:layout_constraintStart_toEndOf="@+id/etEditTaskSecond" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditTaskS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditTaskS"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditTaskS" />
 
     <TextView
         android:id="@+id/textView43"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="S"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakSecond"
-        app:layout_constraintStart_toEndOf="@+id/etEditBreakSecond" />
-
-    <EditText
-        android:id="@+id/etEditTaskHour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-    <EditText
-        android:id="@+id/etEditBreakHour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView40" />
-
-    <EditText
-        android:id="@+id/etEditTaskMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintStart_toEndOf="@+id/textView37"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-    <EditText
-        android:id="@+id/etEditBreakMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakHour"
-        app:layout_constraintStart_toEndOf="@+id/textView41" />
-
-    <EditText
-        android:id="@+id/etEditTaskSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditTaskMin"
-        app:layout_constraintStart_toEndOf="@+id/textView38" />
-
-    <EditText
-        android:id="@+id/etEditBreakSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="2"
-        android:inputType="numberSigned"
-        android:maxLength="2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etEditBreakMin"
-        app:layout_constraintStart_toEndOf="@+id/textView42" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditBreakS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickerEditBreakS"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditBreakS" />
 
     <TextView
         android:id="@+id/textView33"
@@ -145,38 +102,38 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEditTimer" />
 
     <TextView
         android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:text="Break Duration:"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditTaskMin" />
+        app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
     <TextView
         android:id="@+id/textView44"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:text="Background Color:"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditBreakMin" />
+        app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
     <TextView
         android:id="@+id/textView45"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="Text Color:"
         android:textSize="24sp"
@@ -199,15 +156,13 @@
 
     <EditText
         android:id="@+id/etEditName"
-        android:layout_width="0dp"
+        android:layout_width="197dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvEditTimer"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvEditTimer"
         tools:text="Task 1" />
 
@@ -215,8 +170,8 @@
         android:id="@+id/tvEditBgColor"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:background="#C6C6C6"
         app:layout_constraintBottom_toBottomOf="@+id/textView44"
         app:layout_constraintEnd_toEndOf="parent"
@@ -227,10 +182,78 @@
         android:id="@+id/tvEditTextColor"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginEnd="32dp"
         android:background="#403E3E"
         app:layout_constraintBottom_toBottomOf="@+id/textView45"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditBgColor"
-        app:layout_constraintStart_toStartOf="@+id/tvEditBgColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView45"
         app:layout_constraintTop_toTopOf="@+id/textView45" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditTaskH"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView40"
+        app:layout_constraintEnd_toStartOf="@+id/textView37"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditTaskM"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditTaskH"
+        app:layout_constraintEnd_toStartOf="@+id/textView38"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView37"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditTaskH" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditTaskS"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditTaskM"
+        app:layout_constraintEnd_toStartOf="@+id/textView39"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView38"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditTaskM" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditBreakS"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditBreakM"
+        app:layout_constraintEnd_toStartOf="@+id/textView43"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView42"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditBreakM" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditBreakM"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickerEditBreakH"
+        app:layout_constraintEnd_toStartOf="@+id/textView42"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView41"
+        app:layout_constraintTop_toTopOf="@+id/pickerEditBreakH" />
+
+    <NumberPicker
+        android:id="@+id/pickerEditBreakH"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView44"
+        app:layout_constraintEnd_toStartOf="@+id/textView41"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

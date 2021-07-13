@@ -45,12 +45,24 @@ class EditTimerDialogFragment() : DialogFragment() {
 
         binding.apply {
             etEditName.setText(viewModel.activeEditTimer!!.name)
-            etEditTaskHour.setText(convertedTotalTime.first.toString())
-            etEditTaskMin.setText(convertedTotalTime.second.toString())
-            etEditTaskSecond.setText(convertedTotalTime.third.toString())
-            etEditBreakHour.setText(convertedBreakTime.first.toString())
-            etEditBreakMin.setText(convertedBreakTime.second.toString())
-            etEditBreakSecond.setText(convertedBreakTime.third.toString())
+            pickerEditTaskH.maxValue = 24
+            pickerEditTaskH.minValue = 0
+            pickerEditTaskM.maxValue = 60
+            pickerEditTaskM.minValue = 0
+            pickerEditTaskS.maxValue = 60
+            pickerEditTaskS.minValue = 0
+            pickerEditBreakH.maxValue = 24
+            pickerEditBreakH.minValue = 0
+            pickerEditBreakM.maxValue = 60
+            pickerEditBreakM.minValue = 0
+            pickerEditBreakS.maxValue = 60
+            pickerEditBreakS.minValue = 0
+            pickerEditTaskH.value = convertedTotalTime.first
+            pickerEditTaskM.value = convertedTotalTime.second
+            pickerEditTaskS.value = convertedTotalTime.third
+            pickerEditBreakH.value = convertedBreakTime.first
+            pickerEditBreakM.value = convertedBreakTime.second
+            pickerEditBreakS.value = convertedBreakTime.third
 
             tvEditBgColor.setBackgroundColor(viewModel.activeEditTimer!!.timerColor)
             tvEditTextColor.setBackgroundColor(viewModel.activeEditTimer!!.textColor)
@@ -78,12 +90,12 @@ class EditTimerDialogFragment() : DialogFragment() {
                     binding.apply {
                         viewModel.getTimerReadyForUpdate(
                             etEditName.text.toString(),
-                            etEditTaskHour.text.toString(),
-                            etEditTaskMin.text.toString(),
-                            etEditTaskSecond.text.toString(),
-                            etEditBreakHour.text.toString(),
-                            etEditBreakMin.text.toString(),
-                            etEditBreakSecond.text.toString(),
+                            pickerEditTaskH.value.toString(),
+                            pickerEditTaskM.value.toString(),
+                            pickerEditTaskS.value.toString(),
+                            pickerEditBreakH.value.toString(),
+                            pickerEditTaskM.value.toString(),
+                            pickerEditTaskS.value.toString(),
                             (tvEditBgColor.background as ColorDrawable).color,
                             (tvEditTextColor.background as ColorDrawable).color
                         )

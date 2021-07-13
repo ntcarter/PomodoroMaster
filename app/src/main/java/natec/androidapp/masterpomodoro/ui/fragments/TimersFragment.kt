@@ -55,6 +55,8 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
             adapter.items = it
             adapter.notifyDataSetChanged()
         })
+
+        
     }
 
     override fun onDestroyView() {

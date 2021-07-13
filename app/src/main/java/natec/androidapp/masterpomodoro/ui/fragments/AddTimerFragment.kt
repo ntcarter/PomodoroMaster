@@ -40,18 +40,30 @@ class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
         _binding = FragmentAddTimerBinding.bind(view)
 
         binding.apply {
+            taskHourPicker.maxValue = 24
+            taskHourPicker.minValue = 0
+            taskMinutePicker.maxValue = 60
+            taskMinutePicker.minValue = 0
+            taskSecondPicker.maxValue = 60
+            taskSecondPicker.minValue = 0
+            breakHourPicker.maxValue = 24
+            breakHourPicker.minValue = 0
+            breakMinutePicker.maxValue = 60
+            breakMinutePicker.minValue = 0
+            breakSecondPicker.maxValue = 60
+            breakSecondPicker.minValue = 0
             btnSave.setOnClickListener {
 
                 // add the timer to the DB
                 // get all data and forward it to somewhere it can be saved (ViewModel)
                 viewModel.getTimerReadyForInsert(
                     etName.text.toString(),
-                    etTaskHour.text.toString(),
-                    etTaskMin.text.toString(),
-                    etTaskSecond.text.toString(),
-                    etBreakHour.text.toString(),
-                    etBreakMin.text.toString(),
-                    etBreakSecond.text.toString(),
+                    taskHourPicker.value.toString(),
+                    taskMinutePicker.value.toString(),
+                    taskSecondPicker.value.toString(),
+                    breakHourPicker.value.toString(),
+                    breakMinutePicker.value.toString(),
+                    breakSecondPicker.value.toString(),
                     (tvBgColor.background as ColorDrawable).color,
                     (tvTextColor.background as ColorDrawable).color
                 )

@@ -12,8 +12,8 @@ fun convertToHHMMSS(time: Int): Triple<Int, Int, Int> {
     timeLeft -= hours * 3600
 
     minutes = timeLeft / 60
-
     timeLeft -= minutes * 60
+
     seconds = timeLeft
     return Triple(hours, minutes, seconds)
 }

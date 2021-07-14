@@ -67,7 +67,7 @@ class AddTimerViewModel(
 
         // update the values of the current timer and update the DB
         activeEditTimer?.name = name
-        activeEditTimer?.totalTime = times.first
+        activeEditTimer?.taskTotalTime = times.first
         activeEditTimer?.breakTotalTime = times.second
         activeEditTimer?.timerColor = bgColor
         activeEditTimer?.textColor = textColor

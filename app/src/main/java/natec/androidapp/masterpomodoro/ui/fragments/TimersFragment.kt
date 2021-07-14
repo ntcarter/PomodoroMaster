@@ -1,6 +1,7 @@
 package natec.androidapp.masterpomodoro.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -55,8 +56,6 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
             adapter.items = it
             adapter.notifyDataSetChanged()
         })
-
-        
     }
 
     override fun onDestroyView() {
@@ -88,5 +87,15 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         viewModel.activeEditTimer = timer
         val dialogFragment = EditTimerDialogFragment()
         dialogFragment.show(parentFragmentManager, "editTimer")
+    }
+
+    override fun scheduleTimer(timer: Timers) {
+        Log.d(TAG, "scheduleTimer: SCHEDUING TIMER ${timer.name}")
+        timer.scheduleTimer(requireContext())
+    }
+
+    override fun cancelTimer(timer: Timers) {
+        Log.d(TAG, "cancelTimer: CANCELING TIMER: ${timer.name}")
+        timer.cancelTimer(requireContext())
     }
 }

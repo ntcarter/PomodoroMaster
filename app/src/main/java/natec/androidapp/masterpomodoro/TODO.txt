@@ -1,7 +1,13 @@
+// TODO get the ui updating for the timer
+// TODO swipe to dismiss alarm
+// TODO tapping on alarm takes you to the activity and TimersFragment
 // TODO(Get the view model injected. Look for what classes I can inject etc.)
 // TODO(Add animations for the fragment transitions)
 // TODO(Get the timer working while The app is in the foreground)
 // TODO(Get the timer working regardless if the app is in the foreground or background)
+// TODO(Add a restart button for the timers)
+// TODO change musician.mp3 to default ringtones.
+// TODO allow the user to change the ringtone or set it to an mp3 of their own
 // TODO(Try to get the layouts background to have an animated timer that shows the % progression across the layout using a light and darker color)
 // TODO(Implement a stats page)
 // TODO new dialog popups should darken the background content

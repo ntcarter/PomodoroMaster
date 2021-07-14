@@ -40,7 +40,7 @@ class EditTimerDialogFragment() : DialogFragment() {
         _binding = EditTimerDialogBinding.inflate(LayoutInflater.from(context))
 
         // Time is stored in seconds. Convert it to HH/MM/SS
-        val convertedTotalTime = convertToHHMMSS(viewModel.activeEditTimer!!.totalTime)
+        val convertedTotalTime = convertToHHMMSS(viewModel.activeEditTimer!!.taskTotalTime)
         val convertedBreakTime = convertToHHMMSS(viewModel.activeEditTimer!!.breakTotalTime)
 
         binding.apply {

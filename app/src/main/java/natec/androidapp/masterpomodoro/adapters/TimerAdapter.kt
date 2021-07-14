@@ -34,16 +34,21 @@ class TimerAdapter(
             binding.apply {
                 tvTimerName.text = timer.name
                 tvTimerName.setTextColor(timer.textColor)
-                tvTimerTime.text = timer.totalTime.toString()
+                tvTimerTime.text = timer.taskTotalTime.toString()
                 tvTimerTime.setTextColor(timer.textColor)
 
                 btnplay.setOnClickListener {
                     btnplay.visibility = View.GONE
                     btnPause.visibility = View.VISIBLE
+                    // start timer by forwarding to fragment hosting the timer
+                    listener.scheduleTimer(timer)
                 }
+
                 btnPause.setOnClickListener {
                     btnplay.visibility = View.VISIBLE
                     btnPause.visibility = View.GONE
+                    // cancel timer by forwarding to fragment hosting the timer
+                    listener.cancelTimer(timer)
                 }
 
                 btnTimerDelete.setOnLongClickListener {
@@ -64,5 +69,7 @@ class TimerAdapter(
     interface OnItemClickListener {
         fun showDeletionDialog(timer: Timers)
         fun showEditDialog(timer: Timers)
+        fun scheduleTimer(timer: Timers)
+        fun cancelTimer(timer: Timers)
     }
 }

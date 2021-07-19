@@ -3,11 +3,24 @@ package natec.androidapp.masterpomodoro
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class PomodoroApplication : Application() {
+
+    init {
+        instance = this
+    }
+
+    companion object {
+        private var instance: PomodoroApplication? = null
+
+        fun applicationContext() : Context {
+            return instance!!.applicationContext
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -19,6 +32,9 @@ class PomodoroApplication : Application() {
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
+
+            val context: Context = PomodoroApplication.applicationContext()
         }
     }
+
 }

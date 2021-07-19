@@ -156,14 +156,18 @@
 
     <EditText
         android:id="@+id/etEditName"
-        android:layout_width="197dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvEditTimer"
+        app:layout_constraintBottom_toTopOf="@+id/textView33"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvEditTimer"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Task 1" />
 
     <TextView

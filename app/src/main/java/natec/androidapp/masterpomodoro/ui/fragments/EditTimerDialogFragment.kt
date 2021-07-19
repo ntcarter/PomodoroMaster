@@ -11,8 +11,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import natec.androidapp.masterpomodoro.databinding.EditTimerDialogBinding
-import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModel
-import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModelFactory
+import natec.androidapp.masterpomodoro.ui.viewmodels.TimerViewModelFactory
+import natec.androidapp.masterpomodoro.ui.viewmodels.TimersViewModel
 import natec.androidapp.masterpomodoro.util.convertToHHMMSS
 import top.defaults.colorpicker.ColorPickerPopup
 import javax.inject.Inject
@@ -25,13 +25,14 @@ class EditTimerDialogFragment() : DialogFragment() {
     private var _binding: EditTimerDialogBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: AddTimerViewModel
-    @Inject lateinit var factory: AddTimerViewModelFactory
+    private lateinit var viewModel: TimersViewModel
+    @Inject lateinit var factory: TimerViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // scope the viewModel to the activity so it uses the same instance other fragments use
-        viewModel = ViewModelProvider(requireActivity(), factory).get(AddTimerViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(TimersViewModel::class.java)
+        Log.d(TAG, "onCreate: RRRRRRRRRRRRRRRRRRRRRRRR: ${viewModel.activeEditTimer}")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -100,6 +101,7 @@ class EditTimerDialogFragment() : DialogFragment() {
                             (tvEditTextColor.background as ColorDrawable).color
                         )
                     }
+                    viewModel.activeEditTimer = null
                 }
                 .setNegativeButton("Cancel") { dialogInterface, _ ->
                     viewModel.activeEditTimer = null

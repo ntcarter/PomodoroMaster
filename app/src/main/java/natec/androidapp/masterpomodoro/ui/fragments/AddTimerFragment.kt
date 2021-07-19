@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import natec.androidapp.masterpomodoro.R
 import natec.androidapp.masterpomodoro.databinding.FragmentAddTimerBinding
-import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModel
-import natec.androidapp.masterpomodoro.ui.viewmodels.AddTimerViewModelFactory
+import natec.androidapp.masterpomodoro.ui.viewmodels.TimerViewModelFactory
+import natec.androidapp.masterpomodoro.ui.viewmodels.TimersViewModel
 import top.defaults.colorpicker.ColorPickerPopup
 import javax.inject.Inject
 
@@ -21,10 +21,10 @@ private const val TAG = "AddTimerFragment"
 @AndroidEntryPoint
 class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
 
-    private lateinit var viewModel: AddTimerViewModel
+    private lateinit var viewModel: TimersViewModel
 
     @Inject
-    lateinit var factory: AddTimerViewModelFactory
+    lateinit var factory: TimerViewModelFactory
 
     // need to null out our binding variable (in onDestroyView)
     // or it will keep an unnecessary instance of our view hierarchy
@@ -35,7 +35,7 @@ class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
         super.onViewCreated(view, savedInstanceState)
 
         // AddTimerViewModel is shard among multiple fragments so scope it to the activity hosting the fragments
-        viewModel = ViewModelProvider(requireActivity(), factory).get(AddTimerViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(TimersViewModel::class.java)
 
         _binding = FragmentAddTimerBinding.bind(view)
 

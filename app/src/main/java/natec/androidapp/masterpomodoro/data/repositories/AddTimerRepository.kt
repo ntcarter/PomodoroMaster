@@ -4,7 +4,7 @@ import natec.androidapp.masterpomodoro.data.db.PomodoroDatabase
 import natec.androidapp.masterpomodoro.data.db.Timers
 import javax.inject.Inject
 
-class AddTimerRepository @Inject constructor(
+open class AddTimerRepository @Inject constructor(
     private var db: PomodoroDatabase
 ) {
     suspend fun insertTimer(timer: Timers) = db.getTimerDao().insertTimer(timer)

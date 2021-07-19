@@ -3,18 +3,22 @@ package natec.androidapp.masterpomodoro.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import natec.androidapp.masterpomodoro.data.db.Timers
 import natec.androidapp.masterpomodoro.data.repositories.AddTimerRepository
 import natec.androidapp.masterpomodoro.util.convertToSeconds
+import javax.inject.Inject
 
 private const val TAG = "AddTimerViewModel"
 
-class AddTimerViewModel(
+@HiltViewModel
+class TimersViewModel @Inject constructor(
     private val repository: AddTimerRepository
 ) : ViewModel() {
 
     var activeEditTimer: Timers? = null
+
 
     private fun insertTimer(timer: Timers) = viewModelScope.launch {
         repository.insertTimer(timer)
@@ -24,14 +28,14 @@ class AddTimerViewModel(
         repository.deleteTimer(timer)
     }
 
-    private fun updateTimer(timer: Timers) = viewModelScope.launch {
+    fun updateTimer(timer: Timers) = viewModelScope.launch {
         repository.updateTimer(timer)
     }
 
     fun getAllTimers() = repository.getAllTimers()
 
     /**
-     * Recieves text attributes from the UI and converts them into the format needed to insert into the database
+     * Receives text attributes from the UI and converts them into the format needed to insert into the database
      */
     fun getTimerReadyForInsert(
         name: String,
@@ -65,6 +69,11 @@ class AddTimerViewModel(
     ) {
         val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
 
+        // if the task time has changed we reset elapsed time
+        if(times.first != activeEditTimer?.taskTotalTime){
+            activeEditTimer?.taskElapsedTime = 0
+        }
+
         // update the values of the current timer and update the DB
         activeEditTimer?.name = name
         activeEditTimer?.taskTotalTime = times.first
@@ -72,8 +81,6 @@ class AddTimerViewModel(
         activeEditTimer?.timerColor = bgColor
         activeEditTimer?.textColor = textColor
         updateTimer(activeEditTimer!!)
-
-        activeEditTimer = null
     }
 
     private fun getTotalTimes(

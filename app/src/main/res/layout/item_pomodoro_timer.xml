@@ -30,24 +30,11 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest" />
 
-        <TextView
-            android:id="@+id/tvTimerTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textSize="64sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
-            tools:text="10:10" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:background="#FFFFFF"
             app:icon="@drawable/ic_play"
@@ -56,13 +43,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerTime" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerS" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:background="#FFFFFF"
             android:visibility="gone"
@@ -72,7 +59,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerTime" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerS" />
 
         <ImageButton
             android:id="@+id/btnTimerDelete"
@@ -85,6 +72,85 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_delete"
             app:tint="#787474" />
+
+        <ImageButton
+            android:id="@+id/btnTimerRestart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_restart"
+            app:tint="#787474" />
+
+        <TextView
+            android:id="@+id/tvTimerH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="48sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/tvColon1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            tools:text="10"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvTimerM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvColon2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/tvColon1"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/tvTimerS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/tvColon2"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/tvColon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="48sp"
+            android:visibility="visible"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvTimerH"
+            app:layout_constraintEnd_toStartOf="@+id/tvTimerM"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/tvTimerH"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvColon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="48sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvTimerM"
+            app:layout_constraintEnd_toStartOf="@+id/tvTimerS"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/tvTimerM" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

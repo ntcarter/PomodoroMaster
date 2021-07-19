@@ -14,7 +14,7 @@ abstract class PomodoroDatabase : RoomDatabase() {
     abstract fun getTimerDao(): TimerDao
 
     companion object {
-        // creates a singleton on this shoppingDatabase
+        // creates a singleton on this TimerDB
         @Volatile // makes this visible to other threads so only one thread takes action on this database at a time
         private var instance: PomodoroDatabase? = null
         private val LOCK = Any()

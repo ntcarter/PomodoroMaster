@@ -1,7 +1,3 @@
-// TODO(Add a restart button for the timers)
-// TODO swipe to dismiss alarm
-// TODO tapping on alarm notification takes you to the activity and TimersFragment
-// TODO get the activity to popup when the timer goes off if the device is locked
 // TODO implement break timers.
 // TODO(Get the view model injected. Look for what classes I can inject etc.)
 // TODO(Add animations for the fragment transitions)
@@ -12,3 +8,4 @@
 // TODO new dialog popups should darken the background content
 // TODO(Implement general settings and color picking for background colors)
 // TODO(Add preset colors that actually look good)
+// TODO get the activity to popup when the timer goes off if the device is locked

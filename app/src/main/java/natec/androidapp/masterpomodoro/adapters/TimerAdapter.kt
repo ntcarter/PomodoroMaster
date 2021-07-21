@@ -1,13 +1,12 @@
 package natec.androidapp.masterpomodoro.adapters
 
-import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import natec.androidapp.masterpomodoro.R
 import natec.androidapp.masterpomodoro.data.db.Timers
 import natec.androidapp.masterpomodoro.databinding.ItemPomodoroTimerBinding
 
@@ -36,6 +35,8 @@ class TimerAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(timer: Timers) {
+            Log.d(TAG, "bind: BINDING VIEWS")
+            Log.d(TAG, "bind: IS THE ALARM ACTIVE?: ${timer.isActive}, ${timer.id}")
             binding.apply {
                 tvTimerName.text = timer.name
                 tvTimerName.setTextColor(timer.textColor)
@@ -45,6 +46,13 @@ class TimerAdapter(
                 tvTimerS.setTextColor(timer.textColor)
                 tvColon1.setTextColor(timer.textColor)
                 tvColon2.setTextColor(timer.textColor)
+
+                // the timer is active so we set the pause button as visible
+                if(timer.isActive){
+                    btnplay.visibility = View.GONE
+                    btnPause.visibility = View.VISIBLE
+                    timer.startTimingTimerTime()
+                }
 
                 btnplay.setOnClickListener {
                     btnplay.visibility = View.GONE
@@ -64,13 +72,15 @@ class TimerAdapter(
 
                 btnTimerDelete.setOnLongClickListener {
                     listener.showDeletionDialog(timer)
-                    btnTimerDelete.background = TRY TO GET THE DRAWABLE TO CHANGE ON CLICK HERE
-                     MIGHT BE ABLE TO CHANGE PLAY PAUSE BUTTON  CHANGED TO IMAMGE BUTTON AND FORWARD LOGIC TO FRAGMENT
                     true
                 }
 
                 btnTimerRestart.setOnLongClickListener {
                     listener.restartTimer(timer)
+                    if(btnPause.visibility == View.VISIBLE){
+                        btnplay.visibility = View.VISIBLE
+                        btnPause.visibility = View.GONE
+                    }
                     true
                 }
 

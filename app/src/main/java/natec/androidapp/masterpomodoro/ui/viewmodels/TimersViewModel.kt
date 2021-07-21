@@ -46,12 +46,13 @@ class TimersViewModel @Inject constructor(
         breakM: String,
         breakS: String,
         bgColor: Int,
-        textColor: Int
+        textColor: Int,
+        isActive: Boolean
     ) {
 
         val times = getTotalTimes(taskH, taskM, taskS, breakH, breakM, breakS)
 
-        val timerToInsert = Timers(name, times.first, 0, times.second, 0, bgColor, textColor)
+        val timerToInsert = Timers(name, times.first, 0, times.second, 0, bgColor, textColor, isActive, 0)
         Log.d(TAG, "getTimerReadyForInsert: inserting $timerToInsert ")
         insertTimer(timerToInsert)
     }

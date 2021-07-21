@@ -65,7 +65,8 @@ class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
                     breakMinutePicker.value.toString(),
                     breakSecondPicker.value.toString(),
                     (tvBgColor.background as ColorDrawable).color,
-                    (tvTextColor.background as ColorDrawable).color
+                    (tvTextColor.background as ColorDrawable).color,
+                    false
                 )
                 navigateToTimerFragment()
             }

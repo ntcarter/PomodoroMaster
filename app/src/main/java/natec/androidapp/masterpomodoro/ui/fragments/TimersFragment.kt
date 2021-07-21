@@ -1,10 +1,16 @@
 package natec.androidapp.masterpomodoro.ui.fragments
 
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,8 +21,10 @@ import natec.androidapp.masterpomodoro.R
 import natec.androidapp.masterpomodoro.adapters.TimerAdapter
 import natec.androidapp.masterpomodoro.data.db.Timers
 import natec.androidapp.masterpomodoro.databinding.FragmentTimersBinding
+import natec.androidapp.masterpomodoro.ui.TimerActivity
 import natec.androidapp.masterpomodoro.ui.viewmodels.TimerViewModelFactory
 import natec.androidapp.masterpomodoro.ui.viewmodels.TimersViewModel
+import natec.androidapp.masterpomodoro.util.Constants
 import natec.androidapp.masterpomodoro.util.convertToHHMMSS
 import javax.inject.Inject
 
@@ -67,11 +75,6 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun deleteTimerClick(timer: Timers) {
         viewModel.delete(timer)
     }
@@ -108,12 +111,44 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         Log.d(TAG, "scheduleTimer: SCHEDUING TIMER ${timer.name}")
         activeTimers.add(timer)
         timer.scheduleTimer(requireContext())
+
+        createNotification()
     }
 
     override fun cancelTimer(timer: Timers) {
         Log.d(TAG, "cancelTimer: CANCELING TIMER: ${timer.name}")
         activeTimers.remove(timer)
         timer.cancelTimer(requireContext())
+        cancelNotification()
+    }
+
+    private fun createNotification() {
+        val notificationIntent = Intent(context, TimerActivity::class.java)
+
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(context, 0, notificationIntent, 0)
+
+        // create active alarm notification
+        val builder =
+            NotificationCompat.Builder(requireContext(), Constants.NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.timer_notif)
+                .setContentTitle("TITLE OF NOTIF")
+                .setContentText("CONTENT TEXT")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(false)
+                .setOngoing(true)
+
+        with(NotificationManagerCompat.from(requireContext())) {
+            notify(Constants.NOTIFICATION_ID, builder.build())
+        }
+    }
+
+    private fun cancelNotification() {
+        // cancel active alarm notification
+        val notificationManager: NotificationManager =
+            activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(Constants.NOTIFICATION_ID)
     }
 
     override fun restartTimer(timer: Timers) {
@@ -132,6 +167,7 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     ) {
         Log.d(TAG, "setUpObserver: REGISTERING OBSERVER")
         timer.taskTimeLeft.observe(this, {
+
             // calculate the HH/MM/SS and then set the text
             val convertedTime = convertToHHMMSS(it)
 
@@ -161,23 +197,20 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
                 }
             }
 
-            tvSeconds.text = convertedTime.third.toString()
-            if(tvSeconds.text.length == 1){
-                tvSeconds.text = "0"+ tvSeconds.text
+            if (convertedTime.third < 0) {
+                tvSeconds.text = "0"
+            } else {
+                tvSeconds.text = convertedTime.third.toString()
+            }
+
+            // length 1 means single digit, need to add a 0 in front of it
+            if (tvSeconds.text.length == 1) {
+                tvSeconds.text = "0" + tvSeconds.text
             }
         })
     }
 
     override fun showEditDialogToast() {
         Toast.makeText(requireContext(), "Timer Must Be Paused To Edit", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        // save each active timers elapsed time
-        for(timer in activeTimers){
-            timer.pauseTimer()
-            timer.cancelTimer(requireContext())
-        }
     }
 }

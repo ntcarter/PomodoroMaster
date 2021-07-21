@@ -1,8 +1,10 @@
 package natec.androidapp.masterpomodoro.services
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
@@ -12,7 +14,9 @@ import android.os.Vibrator
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import natec.androidapp.masterpomodoro.R
-import natec.androidapp.masterpomodoro.ui.fragments.TimersFragment
+import natec.androidapp.masterpomodoro.ui.TimerActivity
+import natec.androidapp.masterpomodoro.util.Constants
+import natec.androidapp.masterpomodoro.util.Constants.NOTIFICATION_CHANNEL_ID
 
 private const val TAG = "TimerService"
 class TimerService : Service() {
@@ -31,16 +35,21 @@ class TimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onCreate: The timerService has been started")
-        val notificationIntent = Intent(this, TimersFragment::class.java)
+
+        val notificationIntent = Intent(this, TimerActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
         val alarmTitle = String.format("%s Alarm", intent!!.getStringExtra("NAME"))
 
-        val notification: Notification = NotificationCompat.Builder(this, "ALARM_SERVICE_CHANNEL")
+        val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(Constants.NOTIFICATION_ID)
+
+        val notification: Notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentTitle(alarmTitle)
             .setContentText("Ring Ring .. Ring Ring")
             .setSmallIcon(R.drawable.timer_notif)
             .setContentIntent(pendingIntent)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .build()
 
         mediaPlayer.start()

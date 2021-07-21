@@ -40,7 +40,11 @@ data class Timers(
     @ColumnInfo(name = "timer_color")
     var timerColor: Int,
     @ColumnInfo(name = "text_color")
-    var textColor: Int
+    var textColor: Int,
+    @ColumnInfo(name = "is_currently_active")
+    var isActive: Boolean,
+    @ColumnInfo(name = "timer_end_time")
+    var endTime: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
@@ -53,9 +57,6 @@ data class Timers(
     private var _taskTimeLeft = MutableLiveData(taskTotalTime - taskElapsedTime)
     val taskTimeLeft: LiveData<Int>
         get() = _taskTimeLeft
-
-    var isActive: Boolean = false
-    var endTime: Int = 0
 
     @Ignore
     var activejob: Job? = null
@@ -103,10 +104,15 @@ data class Timers(
     fun activateTimer() {
         if (!isActive) {
             isActive = true
+            updateTimer() // update the DB with this timer being active and its scheduled end time
             Log.d(TAG, "activateTimer: LAUNCHING COROUTINE")
-            activejob = scope.launch {
-                updateTimerTime()
-            }
+            startTimingTimerTime()
+        }
+    }
+
+    fun startTimingTimerTime(){
+        activejob = scope.launch {
+            updateTimerTime()
         }
     }
 
@@ -129,6 +135,7 @@ data class Timers(
     }
 
     fun pauseTimer() {
+        Log.d(TAG, "pauseTimer: PAUSING TIMER")
         isActive = false
         taskElapsedTime = taskTotalTime - _taskTimeLeft.value!!
         activejob?.cancel()

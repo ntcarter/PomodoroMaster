@@ -1,6 +1,5 @@
 package natec.androidapp.masterpomodoro.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +34,6 @@ class TimerAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(timer: Timers) {
-            Log.d(TAG, "bind: BINDING VIEWS")
-            Log.d(TAG, "bind: IS THE ALARM ACTIVE?: ${timer.isActive}, ${timer.id}")
             binding.apply {
                 tvTimerName.text = timer.name
                 tvTimerName.setTextColor(timer.textColor)
@@ -46,6 +43,8 @@ class TimerAdapter(
                 tvTimerS.setTextColor(timer.textColor)
                 tvColon1.setTextColor(timer.textColor)
                 tvColon2.setTextColor(timer.textColor)
+                tvLabel.text = "Task"
+                tvLabel.setTextColor(timer.textColor)
 
                 // the timer is active so we set the pause button as visible
                 if(timer.isActive){
@@ -63,11 +62,25 @@ class TimerAdapter(
                 }
 
                 btnPause.setOnClickListener {
-                    btnplay.visibility = View.VISIBLE
-                    btnPause.visibility = View.GONE
-                    // cancel timer by forwarding to fragment hosting the timer
+                    // cancel current timer by forwarding to fragment hosting the timer
                     listener.cancelTimer(timer)
                     timer.pauseTimer()
+                    // signalStartBreak returning true means we automatically start a break and shouldn't swap buttons
+                    if(timer.signalStartBreak()){
+                        timer.swapBreakAndTask()
+                        // start a new timer which should be a break at this point
+                        listener.scheduleTimer(timer)
+                        timer.activateTimer()
+                    }else {
+                        btnplay.visibility = View.VISIBLE
+                        btnPause.visibility = View.GONE
+                    }
+
+                    if(timer.isBreak){
+                        tvLabel.text = "Break"
+                    }else{
+                        tvLabel.text = "Task"
+                    }
                 }
 
                 btnTimerDelete.setOnLongClickListener {
@@ -77,6 +90,7 @@ class TimerAdapter(
 
                 btnTimerRestart.setOnLongClickListener {
                     listener.restartTimer(timer)
+                    tvLabel.text = "Task"
                     if(btnPause.visibility == View.VISIBLE){
                         btnplay.visibility = View.VISIBLE
                         btnPause.visibility = View.GONE

@@ -4,11 +4,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import natec.androidapp.masterpomodoro.databinding.EditTimerDialogBinding
 import natec.androidapp.masterpomodoro.ui.viewmodels.TimerViewModelFactory
@@ -25,15 +24,8 @@ class EditTimerDialogFragment() : DialogFragment() {
     private var _binding: EditTimerDialogBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: TimersViewModel
+    private val viewModel: TimersViewModel by viewModels() // hilt injected
     @Inject lateinit var factory: TimerViewModelFactory
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // scope the viewModel to the activity so it uses the same instance other fragments use
-        viewModel = ViewModelProvider(requireActivity(), factory).get(TimersViewModel::class.java)
-        Log.d(TAG, "onCreate: RRRRRRRRRRRRRRRRRRRRRRRR: ${viewModel.activeEditTimer}")
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -76,6 +68,7 @@ class EditTimerDialogFragment() : DialogFragment() {
             tvEditTextColor.setOnClickListener {
                 val colorIdInt = (tvEditTextColor.background as ColorDrawable).color
                 openColorPicker(colorIdInt, tvEditTextColor)
+
             }
         }
 
@@ -117,7 +110,6 @@ class EditTimerDialogFragment() : DialogFragment() {
     }
 
     private fun openColorPicker(color: Int, view: TextView) {
-        Log.d(TAG, "openColorPicker: Color passed in: $color")
         ColorPickerPopup.Builder(requireContext())
             .initialColor(color)
             .enableBrightness(true)

@@ -25,6 +25,7 @@
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/btnTimerDelete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,7 @@
             android:id="@+id/btnplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:background="#FFFFFF"
             app:icon="@drawable/ic_play"
@@ -89,14 +90,13 @@
             android:id="@+id/tvTimerH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:textSize="48sp"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/tvColon1"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel"
             tools:text="10"
             tools:visibility="visible" />
 
@@ -104,33 +104,31 @@
             android:id="@+id/tvTimerM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:textSize="48sp"
             app:layout_constraintEnd_toStartOf="@+id/tvColon2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/tvColon1"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel"
             tools:text="10" />
 
         <TextView
             android:id="@+id/tvTimerS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:textSize="48sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/tvColon2"
-            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel"
             tools:text="10" />
 
         <TextView
             android:id="@+id/tvColon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
+            android:text="@string/colon"
             android:textSize="48sp"
             android:visibility="visible"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvTimerH"
@@ -144,13 +142,25 @@
             android:id="@+id/tvColon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
+            android:text="@string/colon"
             android:textSize="48sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvTimerM"
             app:layout_constraintEnd_toStartOf="@+id/tvTimerS"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/tvTimerM" />
+
+        <TextView
+            android:id="@+id/tvLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimerName"
+            tools:text="Task" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

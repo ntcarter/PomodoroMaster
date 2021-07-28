@@ -28,7 +28,7 @@ class TimersViewModel @Inject constructor(
         repository.deleteTimer(timer)
     }
 
-    fun updateTimer(timer: Timers) = viewModelScope.launch {
+    private fun updateTimer(timer: Timers) = viewModelScope.launch {
         repository.updateTimer(timer)
     }
 

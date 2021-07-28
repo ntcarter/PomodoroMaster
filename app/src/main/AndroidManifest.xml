@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasterPomodoro">
         <activity android:name=".ui.TimerActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

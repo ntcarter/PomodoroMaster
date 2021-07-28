@@ -5,14 +5,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,13 +27,10 @@ import natec.androidapp.masterpomodoro.util.Constants
 import natec.androidapp.masterpomodoro.util.convertToHHMMSS
 import javax.inject.Inject
 
-
-private const val TAG = "TimersFragment"
-
 @AndroidEntryPoint
 class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemClickListener {
 
-    private lateinit var viewModel: TimersViewModel
+    private val viewModel: TimersViewModel by viewModels() // hilt injected
 
     @Inject
     lateinit var factory: TimerViewModelFactory
@@ -44,13 +40,10 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     private var _binding: FragmentTimersBinding? = null
     private val binding get() = _binding!!
 
-    val activeTimers = arrayListOf<Timers>()
+    private val activeTimers = arrayListOf<Timers>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: CALLED:----------------------")
-
-        viewModel = ViewModelProvider(requireActivity(), factory).get(TimersViewModel::class.java)
 
         _binding = FragmentTimersBinding.bind(view)
 
@@ -101,14 +94,11 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         // set the active timer being edited so we can access its views in another fragment
         viewModel.activeEditTimer = timer
 
-        Log.d(TAG, "showEditDialog: ACTIVE TIMER: ${viewModel.activeEditTimer}")
-
         val dialogFragment = EditTimerDialogFragment()
         dialogFragment.show(parentFragmentManager, "editTimer")
     }
 
     override fun scheduleTimer(timer: Timers) {
-        Log.d(TAG, "scheduleTimer: SCHEDUING TIMER ${timer.name}")
         activeTimers.add(timer)
         timer.scheduleTimer(requireContext())
 
@@ -116,7 +106,6 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     }
 
     override fun cancelTimer(timer: Timers) {
-        Log.d(TAG, "cancelTimer: CANCELING TIMER: ${timer.name}")
         activeTimers.remove(timer)
         timer.cancelTimer(requireContext())
         cancelNotification()
@@ -132,8 +121,8 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         val builder =
             NotificationCompat.Builder(requireContext(), Constants.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.timer_notif)
-                .setContentTitle("TITLE OF NOTIF")
-                .setContentText("CONTENT TEXT")
+                .setContentTitle("Master Pomodoro")
+                .setContentText("Timer active")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(false)
@@ -165,13 +154,11 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
         tvColon1: TextView,
         tvColon2: TextView
     ) {
-        Log.d(TAG, "setUpObserver: REGISTERING OBSERVER")
-        timer.taskTimeLeft.observe(this, {
+        timer.timeLeft.observe(this, {
 
             // calculate the HH/MM/SS and then set the text
             val convertedTime = convertToHHMMSS(it)
 
-            Log.d(TAG, "setUpObserver: UIUPDATE!!!!!!!!!!!!!!!!!!!")
             // Hours visibility check
             if (convertedTime.first <= 0 && tvHours.visibility == View.VISIBLE) {
                 tvHours.visibility = View.GONE

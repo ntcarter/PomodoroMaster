@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
@@ -44,7 +43,9 @@ data class Timers(
     @ColumnInfo(name = "is_currently_active")
     var isActive: Boolean,
     @ColumnInfo(name = "timer_end_time")
-    var endTime: Int
+    var endTime: Int,
+    @ColumnInfo(name = "is_break")
+    var isBreak: Boolean = false
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
@@ -54,27 +55,30 @@ data class Timers(
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     @Ignore
-    private var _taskTimeLeft = MutableLiveData(taskTotalTime - taskElapsedTime)
-    val taskTimeLeft: LiveData<Int>
-        get() = _taskTimeLeft
+    private var _timeLeft = MutableLiveData(getTaskOrBreakTotalTime() - getTaskOrBreakElapsedTime())
+    val timeLeft: LiveData<Int>
+        get() = _timeLeft
 
     @Ignore
     var activejob: Job? = null
 
     fun scheduleTimer(context: Context) {
+        val elapsedTime = getTaskOrBreakElapsedTime()
+        val totalTime = getTaskOrBreakTotalTime()
+
         val alarmManager: AlarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TimerBroadcastReceiver::class.java)
         intent.putExtra("ID", id)
         intent.putExtra("NAME", name)
-        intent.putExtra("TASK_TOTAL_TIME", taskTotalTime)
-        intent.putExtra("BREAK_TOTAL_TIME", breakTotalTime)
+        intent.putExtra("TOTAL_TIME", totalTime)
+        intent.putExtra("ELAPSED_TIME", elapsedTime)
 
         val timerPendingIntent = PendingIntent.getBroadcast(context, id!!, intent, 0)
 
         val calendar: Calendar = Calendar.getInstance()
         val curTime = System.currentTimeMillis()
-        val timerEndTime = curTime + (taskTotalTime - taskElapsedTime) * 1000
+        val timerEndTime = curTime + (totalTime - elapsedTime) * 1000
 
         //set the calendar date to the time from now + our timers time.
         calendar.time = Date(timerEndTime)
@@ -84,9 +88,6 @@ data class Timers(
             calendar.timeInMillis,
             timerPendingIntent
         )
-
-        Log.d(TAG, "scheduleTimer ALARM SCHEDULED FOR: ${calendar.time}")
-        Log.d(TAG, "scheduleTimer: ENDTIME: ${timerEndTime / 1000}")
         endTime = (timerEndTime / 1000).toInt()
     }
 
@@ -105,7 +106,6 @@ data class Timers(
         if (!isActive) {
             isActive = true
             updateTimer() // update the DB with this timer being active and its scheduled end time
-            Log.d(TAG, "activateTimer: LAUNCHING COROUTINE")
             startTimingTimerTime()
         }
     }
@@ -117,45 +117,81 @@ data class Timers(
     }
 
     private suspend fun updateTimerTime() {
-        // loop infinitely on a coroutine thread and update time
-        while (isActive && _taskTimeLeft.value!! > 0) {
+        // loop until timer end or pause on a coroutine thread and update time
+        while (isActive && _timeLeft.value!! > 0) {
             delay(1000)
             //get the current time.
             val curTime = System.currentTimeMillis() / 1000
 
             val timeLeft = (endTime) - curTime
-            Log.d(TAG, "TIMELEFT: $timeLeft ")
-            Log.d(TAG, "3: ----------------------------------------------")
-            _taskTimeLeft.value = timeLeft.toInt()
+            _timeLeft.value = timeLeft.toInt()
         }
-        taskElapsedTime = taskTotalTime - _taskTimeLeft.value!!
-        Log.d(TAG, "updateUI: Elapsed time: $taskElapsedTime")
+        if(!isBreak) {
+            taskElapsedTime = taskTotalTime - _timeLeft.value!!
+        }else {
+            breakElapsedTime = breakTotalTime - _timeLeft.value!!
+        }
         isActive = false
         updateTimer()
     }
 
     fun pauseTimer() {
-        Log.d(TAG, "pauseTimer: PAUSING TIMER")
         isActive = false
-        taskElapsedTime = taskTotalTime - _taskTimeLeft.value!!
+        if(!isBreak){
+            taskElapsedTime = taskTotalTime - _timeLeft.value!!
+        }else {
+            breakElapsedTime = breakTotalTime - _timeLeft.value!!
+            // if it is a break and the time left is <=0 then restart the timer
+            if(_timeLeft.value!! <= 0){
+                restartTimer()
+            }
+        }
         activejob?.cancel()
         //update the DB with the elapsed time
         updateTimer()
     }
 
     private fun updateTimer(){
-        Log.d(TAG, "updateTimer: UPDATING ELAPSED TIME WITH: ${this.taskElapsedTime}")
-
         val db = PomodoroDatabase.invoke(PomodoroApplication.applicationContext())
         val repository = AddTimerRepository(db)
-        Log.d(TAG, "REPOSITORY: $repository")
         scope.launch {
             repository.updateTimer(this@Timers)
         }
     }
 
+    fun swapBreakAndTask(){
+        isBreak = !isBreak
+        // a swap means we start at a new break or task time and need to set time left accordingly
+        _timeLeft.value = getTaskOrBreakTotalTime()
+    }
+
+    // check to see is Elapsed time >= total time
+    // if task isbreak = false and then start break timer automatically by scheduling timer and activating it
+    // return true if we started a break and the UI shouldn't change buttons to play
+    fun signalStartBreak(): Boolean {
+        return getTaskOrBreakElapsedTime() >= getTaskOrBreakTotalTime() &&!isBreak
+    }
+
     fun restartTimer(){
         taskElapsedTime = 0
-        _taskTimeLeft.value = taskTotalTime
+        breakElapsedTime = 0
+        isBreak = false
+        _timeLeft.value = getTaskOrBreakTotalTime()
+    }
+
+    private fun getTaskOrBreakTotalTime(): Int{
+        return if(isBreak){
+            breakTotalTime
+        }else{
+            taskTotalTime
+        }
+    }
+
+    private fun getTaskOrBreakElapsedTime(): Int{
+        return if(isBreak){
+            breakElapsedTime
+        }else {
+            taskElapsedTime
+        }
     }
 }

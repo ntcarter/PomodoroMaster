@@ -2,11 +2,10 @@ package natec.androidapp.masterpomodoro.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import natec.androidapp.masterpomodoro.R
@@ -21,7 +20,7 @@ private const val TAG = "AddTimerFragment"
 @AndroidEntryPoint
 class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
 
-    private lateinit var viewModel: TimersViewModel
+    private val viewModel: TimersViewModel by viewModels() // hilt injected
 
     @Inject
     lateinit var factory: TimerViewModelFactory
@@ -33,9 +32,6 @@ class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // AddTimerViewModel is shard among multiple fragments so scope it to the activity hosting the fragments
-        viewModel = ViewModelProvider(requireActivity(), factory).get(TimersViewModel::class.java)
 
         _binding = FragmentAddTimerBinding.bind(view)
 
@@ -93,7 +89,6 @@ class AddTimerFragment : Fragment(R.layout.fragment_add_timer) {
     }
 
     private fun openColorPicker(color: Int, view: TextView) {
-        Log.d(TAG, "openColorPicker: Color passed in: $color")
         ColorPickerPopup.Builder(requireContext())
             .initialColor(color)
             .enableBrightness(true)

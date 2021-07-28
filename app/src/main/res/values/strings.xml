@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MasterPomodoro</string>
+    <string name="editing_timer">Editing Timer: </string>
+    <string name="h">H</string>
+    <string name="m">M</string>
+    <string name="s">S</string>
+    <string name="task_duration">Task Duration:</string>
+    <string name="break_duration">Break Duration:</string>
+    <string name="background_color">Background Color:</string>
+    <string name="text_color">Text Color:</string>
+    <string name="colon">:</string>
+    <string name="timer_name">Timer Name</string>
+    <string name="task_name">Task Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="task">Task</string>
 </resources>

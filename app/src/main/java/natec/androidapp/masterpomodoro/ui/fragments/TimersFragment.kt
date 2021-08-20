@@ -200,4 +200,9 @@ class TimersFragment : Fragment(R.layout.fragment_timers), TimerAdapter.OnItemCl
     override fun showEditDialogToast() {
         Toast.makeText(requireContext(), "Timer Must Be Paused To Edit", Toast.LENGTH_SHORT).show()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
